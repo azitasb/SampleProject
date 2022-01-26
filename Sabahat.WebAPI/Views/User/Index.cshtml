@@ -1,0 +1,82 @@
+﻿@model Sabahat.WebAPI.Models.UserModel
+@{
+    ViewBag.Title = "Benutzerprofile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div ng-controller="UserController">
+    <div class="topHeader">
+        <h2>Benutzerprofile</h2>
+        <div>
+            <input autofocus type="text" persian-keyboard name="search" ng-model="search" class="form-control" placeholder="suchen..." />
+        </div>
+        <div>
+            <button class="btn btn-primary" ng-click="getUsers()">
+                <span class="glyphicon glyphicon-refresh" title="aktualisieren">
+                </span>
+            </button>
+                <button class="btn btn-success" ng-click="addUser()">
+                    <span class="glyphicon glyphicon-plus" title="hinzufügen">
+                    </span>
+                </button>
+        </div>
+        <div class="alert alert-danger alert-dismissible" role="alert" ng-if="message">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            {{message}}
+        </div>
+    </div>
+
+    <div class="loadingBg" ng-style="onLoading ? {'display': 'block'} : {'display': 'none'}">
+        <div class="loadingState">
+            <img src="~/Images/loading.gif" />
+        </div>
+    </div>
+
+    <hr />
+    <div>
+        <table class="table table-striped text-center">
+            <thead>
+                <tr class="warning">
+                    <th width="7%">#</th>
+                    <th>Vorname</th>
+                    <th>Nachname</th>
+                    <th>PLZ</th>
+                    <th>Stadt</th>
+                    <th>Job-Ebene</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="user in filtered = (lists | filter: search).slice(((currentPage - 1) * itemsPerPage), ((currentPage) * itemsPerPage))">
+                    <td class="text-center">{{ $index + 1 + ((currentPage - 1) * itemsPerPage) }}</td>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.lastName }}</td>
+                    <td>{{ user.zipCode }}</td>
+                    <td>{{ user.city }}</td>
+                    <td>{{ user.jobLevel }}</td>
+                </tr>
+                <tr class="grid-no-result" ng-show="lists.length==0">
+
+                    <td colspan="6">Keine Daten</td>
+                </tr>
+            </tbody>
+            <tfoot class="panel-footer">
+                <tr>
+                    <td>
+                        <div style="line-height:2;">
+                            <span class="badge">{{ (lists | filter: search).length }}</span>
+                        </div>
+                    </td>
+                    <td colspan="5">
+                        <div uib-pagination style="margin: 0!important" previous-text="vorherig" next-text="nächste"
+                             last-text="zuletzt" first-text="zuerst" items-per-page="itemsPerPage"
+                             total-items="(lists | filter: search).length" ng-model="currentPage"
+                             max-size="maxSize" class="pagination-md" boundary-links="true" rotate="false"></div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+

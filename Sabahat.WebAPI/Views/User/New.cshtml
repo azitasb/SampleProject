@@ -1,0 +1,74 @@
+﻿
+@{
+    ViewBag.Title = "Neuer Benutzer";
+}
+
+<div>
+    <!-- Modal Header -->
+    <div class="modal-header">
+        <h3 class="modal-title">Neuer Benutzer</h3>
+    </div>
+
+    <!-- Modal Body -->
+    <div class="modal-body">
+        <div class="alert alert-danger alert-dismissible" role="alert" ng-if="message">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            {{message}}
+        </div>
+        <form id="newForm" role="form" name="newForm" novalidate>
+            <div class="form-group" ng-class="{ 'has-error': newForm.name.$invalid && newForm.name.$touched, 'has-success': newForm.name.$valid}">
+                <label for="name" class="control-label">Vorname</label>
+                <input autofocus type="text" onkeypress="return /[a-z]/i.test(event.key)" persian-keyboard id="name" name="name" ng-model="newModel.name" class="form-control" ng-minlength="1" ng-maxlength="100" required />
+                <div ng-messages="newForm.name.$error" ng-if="newForm.name.$touched" class="help-block">
+                    <div ng-messages-include="messages.html"></div>
+                </div>
+            </div>
+            <div class="form-group" ng-class="{ 'has-error': newForm.lastName.$invalid && newForm.lastName.$touched, 'has-success': newForm.lastName.$valid}">
+                <label for="lastName" class="control-label">Nachname</label>
+                <input autofocus type="text" onkeypress="return /[a-z]/i.test(event.key)" persian-keyboard id="lastName" name="lastName" ng-model="newModel.lastName" class="form-control" ng-minlength="1" ng-maxlength="100" required />
+                <div ng-messages="newForm.lastName.$error" ng-if="newForm.lastName.$touched" class="help-block">
+                    <div ng-messages-include="messages.html"></div>
+                </div>
+            </div>
+            <div class="form-group" ng-class="{ 'has-error': newForm.zipCode.$invalid && newForm.zipCode.$touched, 'has-success': newForm.zipCode.$valid}">
+                <label for="zipCode" class="control-label">PLZ</label>
+                <input autofocus type="text" persian-keyboard id="zipCode" name="zipCode" ng-model="newModel.zipCode" class="form-control" ng-minlength="1" ng-maxlength="100" required />
+                <div ng-messages="newForm.zipCode.$error" ng-if="newForm.zipCode.$touched" class="help-block">
+                    <div ng-messages-include="messages.html"></div>
+                </div>
+            </div>
+            <div class="form-group" ng-class="{ 'has-error': newForm.city.$invalid && newForm.city.$touched, 'has-success': newForm.city.$valid}">
+                <label for="city" class="control-label">Stadt</label>
+                <input autofocus type="text" onkeypress="return /[a-z]/i.test(event.key)" persian-keyboard id="city" name="city" ng-model="newModel.city" class="form-control" ng-minlength="1" ng-maxlength="100" required />
+                <div ng-messages="newForm.city.$error" ng-if="newForm.city.$touched" class="help-block">
+                    <div ng-messages-include="messages.html"></div>
+                </div>
+            </div>
+            <div class="form-group" ng-class="{ 'has-error': newForm.jobLevel.$invalid && newForm.jobLevel.$touched, 'has-success': newForm.jobLevel.$valid}">
+                <label for="jobLevel" class="control-label">Job-Ebene</label>
+                @*<input autofocus type="text" persian-keyboard id="jobLevel" name="jobLevel" ng-model="newModel.jobLevel" class="form-control" ng-minlength="1" ng-maxlength="100" required />*@
+                <select name="jobLevel" id="jobLevel" ng-model="newModel.jobLevel" class="form-control" required>
+                    <option value="1">Junior</option>
+                    <option value="2">Mid-Level</option>
+                    <option value="3">Senior</option>
+                    <option value="4">Staff</option>
+                    <option value="5">Manager</option>
+                    <option value="6">CTO</option>
+                    <option value="7">CEO</option>
+                </select>
+                <div ng-messages="newForm.jobLevel.$error" ng-if="newForm.jobLevel.$touched" class="help-block">
+                    <div ng-messages-include="messages.html"></div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Modal Footer -->
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="saveUser()" ng-disabled="newForm.$invalid">Speichern</button>
+        <button class="btn btn-default" ng-click="cancel()">Abbrechen</button>
+    </div>
+</div>
+
